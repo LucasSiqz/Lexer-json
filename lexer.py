@@ -1,17 +1,33 @@
 from collections import namedtuple
+from pprint import pprint
 import re
 
 # Classe que representa uma token com campos value e type
 Token = namedtuple('Token', ['value', 'type'])
 
-re_number = r'(?P<NUMBER>\-?\d+(\.\d+)?([eE][+-]\d+)?)'  
-re_operator = r'(?P<OPERATOR>[-+*/])'
-re_space = r'(?P<SPACE>\s+)'
+re_number = r'(?P<number>\-?\d+(\.\d+)?([eE][+-]\d+)?)'
+re_space = r'(?P<space>\s+)'
+re_left_key = r'(?P<lbrace>\{)'
+re_right_key = r'(?P<rbrace>\})'
+re_left_bracket = r'(?P<lbrack>\[)'
+re_right_bracket = r'(?P<rbrack>\])'
+re_comma = r'(?P<comma>\,)'
+re_colon = r'(?P<colon>\:)'
+re_constant = r'(?P<constant>(true|false|null))'
+re_string = r'(?P<string>\"((\\[\"\\/bfnrtu])?[a-zA-Z0-9_])*\")'
 
 re_list = [
     re_number,
-    re_operator,
-    re_space
+    re_space,
+    re_left_key,
+    re_right_key,
+    re_left_bracket,
+    re_right_bracket,
+    re_comma,
+    re_colon,
+    re_constant,
+    re_string
+
 ]
 
 re_full = '|'.join(re_list)
@@ -19,7 +35,7 @@ re_compiled = re.compile(re_full)
 
 def lexer(src: str) -> list:
     """
-    Lê uma string de código fonte JSON e retorna a lista de Tokens 
+    Lê uma string de código fonte JSON e retorna a lista de Tokens
     correspondente.
 
     Em caso de erros, levanta uma exceção do tipo SyntaxError.
@@ -27,7 +43,24 @@ def lexer(src: str) -> list:
 
     tokens = []
     last_char = 0
+    for m in re_compiled.finditer(src):
+        i, j = m.span()
 
-    
+        if i > last_char:
+            raise SyntaxError('invalid token: %r' % src[last_char:i])
 
-    return [Token('hello', 'string')]
+        last_char = j
+
+        tk_type = m.lastgroup
+        tk_value = src[i:j]
+
+        if tk_type != 'SPACE':
+            token = Token(tk_value, tk_type)
+            tokens.append(token)
+
+    if j != len(src):
+        raise SyntaxError('invalid token: %r' % src[j:])
+
+    return tokens
+
+pprint(lexer(input('Expr: ')))
