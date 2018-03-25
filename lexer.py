@@ -1,5 +1,5 @@
 from collections import namedtuple
-from pprint import pprint
+# from pprint import pprint
 import re
 
 # Classe que representa uma token com campos value e type
@@ -63,4 +63,4 @@ def lexer(src: str) -> list:
 
     return tokens
 
-pprint(lexer(input('Expr: ')))
+# pprint(lexer(input('Expr: ')))
