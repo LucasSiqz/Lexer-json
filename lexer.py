@@ -14,7 +14,7 @@ re_right_bracket = r'(?P<rbrack>\])'
 re_comma = r'(?P<comma>\,)'
 re_colon = r'(?P<colon>\:)'
 re_constant = r'(?P<constant>(true|false|null))'
-re_string = r'(?P<string>\"((\\[\"\\/bfnrtu])?[a-zA-Z0-9_])*\")'
+re_string = r'(?P<string>"((\\([\"\\/bfnrt])?|([a-fA-F0-9]{4})?)*?[a-zA-Z0-9_])*")'
 
 re_list = [
     re_number,
@@ -54,12 +54,12 @@ def lexer(src: str) -> list:
         tk_type = m.lastgroup
         tk_value = src[i:j]
 
-        if tk_type != 'SPACE':
+        if tk_type != 'space':
             token = Token(tk_value, tk_type)
             tokens.append(token)
 
-    if j != len(src):
-        raise SyntaxError('invalid token: %r' % src[j:])
+    if last_char != len(src):
+        raise SyntaxError('invalid token: %r' % src[last_char:])
 
     return tokens
 
