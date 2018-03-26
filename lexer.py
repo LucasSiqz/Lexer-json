@@ -14,7 +14,7 @@ re_right_bracket = r'(?P<rbrack>\])'
 re_comma = r'(?P<comma>\,)'
 re_colon = r'(?P<colon>\:)'
 re_constant = r'(?P<constant>(true|false|null))'
-re_string = r'(?P<string>"((\\([\"\\/bfnrt])?|([a-fA-F0-9]{4})?)*?[a-zA-Z0-9_])*")'
+re_string = r'(?P<string>\"(\w|\s|\\(\"|\\|\/|b|f|n|r|t)|\\u[0-9a-fA-F]{4})*\")'
 
 re_list = [
     re_number,
