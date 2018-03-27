@@ -5,7 +5,7 @@ import re
 # Classe que representa uma token com campos value e type
 Token = namedtuple('Token', ['value', 'type'])
 
-re_number = r'(?P<number>\-?\d+(\.\d+)?([eE][+-]?\d+)?)'
+re_number = r'(?P<number>\-?(0|[1-9]([0-9]*))(\.\d+)?([eE][+-]?\d+)?)'
 re_space = r'(?P<space>\s+)'
 re_left_key = r'(?P<lbrace>\{)'
 re_right_key = r'(?P<rbrace>\})'
@@ -34,7 +34,7 @@ re_list = [
     #re_value,
     re_object,
     re_array,
-    
+
 ]
 
 re_full = '|'.join(re_list)
