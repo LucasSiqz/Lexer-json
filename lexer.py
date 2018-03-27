@@ -14,7 +14,7 @@ re_right_bracket = r'(?P<rbrack>\])'
 re_comma = r'(?P<comma>\,)'
 re_colon = r'(?P<colon>\:)'
 re_constant = r'(?P<constant>(true|false|null))'
-re_string = r'(?P<string>\"([^\\"]|\s|\\(\"|\\|\/|b|f|n|r|t)|\\u[0-9a-fA-F]{4})*\")'
+re_string = r'(?P<string>\"([^\\"]|\\(\"|\\|\/|b|f|n|r|t)|\\u[0-9a-fA-F]{4})*\")'
 re_object = r'(?P<object>\{(?:(s*(?P=string)\s*:((?P=string)|(?P=number)|(?P=constant)))(?: , (s*(?P=string)\s*:((?P=string)|(?P=number)|(?P=constant))))*)?\})'
 re_array = r'(?P<array>\[(?:((?P=string)|(?P=number)|(?P=constant))(?:,((?P=string)|(?P=number)|(?P=constant))))\])'
 
