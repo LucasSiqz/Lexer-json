@@ -5,7 +5,7 @@ import re
 # Classe que representa uma token com campos value e type
 Token = namedtuple('Token', ['value', 'type'])
 
-re_number = r'(?P<number>\-?\d+(\.\d+)?([eE][+-]\d+)?)'
+re_number = r'(?P<number>\-?\d+(\.\d+)?([eE][+-]?\d+)?)'
 re_space = r'(?P<space>\s+)'
 re_left_key = r'(?P<lbrace>\{)'
 re_right_key = r'(?P<rbrace>\})'
@@ -15,6 +15,10 @@ re_comma = r'(?P<comma>\,)'
 re_colon = r'(?P<colon>\:)'
 re_constant = r'(?P<constant>(true|false|null))'
 re_string = r'(?P<string>\"(\w|\s|\\(\"|\\|\/|b|f|n|r|t)|\\u[0-9a-fA-F]{4})*\")'
+#re_value = r'(?P<value>(?P=string)|(?P=number)|(?P=constant)|(?P=object)|(?P=array))'
+#re_pair = r'(?P<pair>\s*(?P=string)\s*:(?P=value))'
+re_object = r'(?P<object>\{(?:(s*(?P=string)\s*:((?P=string)|(?P=number)|(?P=constant)))(?: , (s*(?P=string)\s*:((?P=string)|(?P=number)|(?P=constant))))*)?\})'
+re_array = r'(?P<array>\[(?:((?P=string)|(?P=number)|(?P=constant))(?:,((?P=string)|(?P=number)|(?P=constant))))\])'
 
 re_list = [
     re_number,
@@ -26,8 +30,11 @@ re_list = [
     re_comma,
     re_colon,
     re_constant,
-    re_string
-
+    re_string,
+    #re_value,
+    re_object,
+    re_array,
+    
 ]
 
 re_full = '|'.join(re_list)
